@@ -17,8 +17,16 @@
   dnf:
     name:
       - timeshift
+      - gnome-tweaks
     state: present
   become: True
+
+# - name: Install theme tools
+#   dnf:
+#     name:
+#       - gtk-murrine-engine
+#     state: present
+#   become: True
 
 - name: Install 'Development tools' package group
   dnf:

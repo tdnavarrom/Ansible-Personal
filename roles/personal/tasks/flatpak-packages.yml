@@ -54,7 +54,6 @@
     - org.telegram.desktop
     - com.slack.Slack
     - us.zoom.Zoom
-    - org.gnome.Evolution
 
 - name: Install common tools
   flatpak:
