@@ -1,0 +1,102 @@
+---
+- name: Install the rpmfusion repo packages
+  dnf:
+    disable_gpg_check: yes
+    name:
+      - 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version  }}.noarch.rpm'
+      - 'https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm'
+    state: present
+  become: True
+
+- name: Add winerepo
+  shell:
+    cmd: dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
+  become: True
+
+- name: Install Administrative tools
+  dnf:
+    name:
+      - timeshift
+    state: present
+  become: True
+
+- name: Install 'Development tools' package group
+  dnf:
+    name: "@Development tools"
+    state: present
+  become: True
+
+- name: Install common tools
+  dnf:
+    name:
+      - tilix
+      - htop
+      - zsh
+      - unrar
+      - util-linux-user
+      - dkms
+      - kernel-devel
+      - snapd
+    state: present
+  become: True
+
+- name: Install development tools
+  dnf:
+    #disable_gpg_check: yes
+    name:
+      - java-latest-openjdk
+      - cmake
+      - emacs
+      - vim
+      - nodejs
+      - php
+      - composer
+      - Lmod
+      - code
+    #  - 'https://dev.mysql.com/get/mysql80-community-release-fc{{ ansible_distribution_major_version  }}-1.noarch.rpm'
+    state: present
+  become: True
+  
+# - name: Install database tools
+#   dnf:
+#     name:
+#       - mysql-community-server
+#       - mysql-workbench-community
+#     state: present
+#   become: True
+
+# - name: Make sure pymysql is present
+#   become: true # needed if the other tasks are not played as root
+#   pip:
+#     name: pymysql
+#     state: present
+
+
+- name: Install gaming related tools
+  dnf:
+    name:
+      - winehq-devel
+      - steam
+      - lutris
+    state: present
+  become: True
+
+- name: Install video editing tools
+  dnf:
+    name:
+      - obs-studio
+    state: present
+  become: True
+
+#- name: Configure VirtualBox
+#  shell:
+#    cmd: akmods; systemctl restart vboxdrv.service
+#s  become: yes
+
+- name: Update System
+  dnf:
+    update_cache: yes
+    update_only: yes
+    name: '*'
+    state: latest
+  become: True

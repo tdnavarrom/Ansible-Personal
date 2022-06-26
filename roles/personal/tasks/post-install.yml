@@ -1,0 +1,12 @@
+---
+- name: Make sure Mysql service is running
+  systemd:
+    state: started
+    name: mysqld
+  become: True
+
+- name: Enable service Mysql
+  systemd:
+    name: mysqld
+    enabled: yes
+  become: True

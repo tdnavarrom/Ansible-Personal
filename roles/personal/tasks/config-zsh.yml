@@ -1,0 +1,82 @@
+---
+
+- name: Check if .zshrc exists
+  stat:
+    path: ~/.zshrc
+  register: stat_rc_result
+
+- name: Check if .oh-my-zsh exists
+  stat:
+    path: ~/.oh-my-zsh
+  register: stat_oh_my_zsh_result
+
+- name: Check if zsh-autosuggestions exists
+  stat:
+    path: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  register: stat_zsh_autosuggestions_result
+
+
+- name: Check if zsh-syntax-highlighting exists
+  stat:
+    path: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  register: stat_zsh_syntax_highlighting_result
+
+- name: Check if typewritten exists
+  stat:
+    path: ~/.oh-my-zsh/themes/typewritten
+  register: stat_typewritten_result
+
+
+- name: Cloning  oh-my-zsh
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh
+    dest: ~/.oh-my-zsh
+  when: not stat_oh_my_zsh_result.stat.exists
+
+- name: ZSH by default
+  shell:
+    cmd: chsh -s $(which zsh)
+  become: True
+
+- name: Cloning  zsh-autosuggestions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  when: not stat_zsh_autosuggestions_result.stat.exists
+
+- name: Cloning  zsh-syntax-highlighting
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+  when: not stat_zsh_syntax_highlighting_result.stat.exists
+
+- name: Cloning  Typewritten
+  git:
+    repo: https://github.com/reobin/typewritten
+    dest: ~/.oh-my-zsh/themes/typewritten
+  when: not stat_typewritten_result.stat.exists
+
+- name: Creating systemlink for typewritten
+  file:
+    src: "~/.oh-my-zsh/themes/typewritten/typewritten.zsh-theme"
+    dest: "~/.oh-my-zsh/themes/typewritten.zsh-theme" 
+    state: link
+
+- name: Creating systmelink for async
+  file:
+    src: "~/.oh-my-zsh/themes/typewritten/async.zsh"
+    dest: "~/.oh-my-zsh/themes/async"
+    state: link
+
+- name: Creating new ~/.zshrc
+  copy:
+    src: home/zshrc
+    dest: ~/.zshrc
+  when: not stat_rc_result.stat.exists
+
+- name: change user shell to zsh 
+  become: True
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+

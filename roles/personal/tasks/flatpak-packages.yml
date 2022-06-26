@@ -1,0 +1,71 @@
+---
+- name: Add the flathub flatpak repository remote to the user installation
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Install video editing tools
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  with_items:
+    - org.kde.krita
+    - org.kde.kedenlive
+    - com.github.rafostar.Clapper
+
+- name: Install development tools
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  with_items:
+    - re.sonny.Workbench
+    - com.getpostman.Postman
+    - org.gnome.Builder
+    - org.librepcb.LibrePCB
+    - io.dbeaver.DBeaverCommunity
+    
+- name: Install system utilities
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  with_items:
+    - org.gnome.World.PikaBackup
+    - com.usebottles.bottles
+    - org.gnome.Connections
+    - de.haeckerfelix.Fragments
+    - org.gnome.Extensions
+    - com.leinardi.gwe
+    - com.github.tchx84.Flatseal
+    - org.fedoraproject.MediaWriter
+
+- name: Install communication tools
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  with_items:
+    - com.discordapp.Discord
+    - org.signal.Signal
+    - org.telegram.desktop
+    - com.slack.Slack
+    - us.zoom.Zoom
+    - org.gnome.Evolution
+
+- name: Install common tools
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  with_items:
+    - de.haeckerfelix.Shortwave
+    - sh.cider.Cider
+    - com.bitwarden.desktop
+
+- name: Update flatpaks
+  shell:
+    cmd: flatpak update -y

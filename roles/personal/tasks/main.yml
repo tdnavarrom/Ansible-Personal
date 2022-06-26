@@ -1,0 +1,9 @@
+---
+- include_tasks: config.yml
+- include_tasks: packages.yml
+- include_tasks: flatpak-packages.yml
+- include_tasks: config-snap.yml
+#- include_tasks: post-install.yml
+- include_tasks: snap-packages.yml
+- include_tasks: config-zsh.yml
+

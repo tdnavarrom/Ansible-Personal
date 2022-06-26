@@ -1,0 +1,15 @@
+---
+- block:
+  - name: import VS Code key
+    rpm_key:
+      state: present
+      key: "{{ microsoft_key_url }}"
+  - name: copy VSCode repo config
+    copy:
+      src: etc/yum.repos.d/vscode.repo
+      dest: /etc/yum.repos.d/vscode.repo
+      owner: root
+      group: root
+      mode: "0644"
+
+  become: True
