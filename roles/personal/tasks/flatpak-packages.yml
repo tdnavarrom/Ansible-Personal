@@ -13,8 +13,7 @@
     method: user
   with_items:
     - org.kde.krita
-    - org.kde.kedenlive
-    - com.github.rafostar.Clapper
+    - org.kde.kdenlive
 
 - name: Install development tools
   flatpak:
@@ -24,9 +23,6 @@
   with_items:
     - re.sonny.Workbench
     - com.getpostman.Postman
-    - org.gnome.Builder
-    - org.librepcb.LibrePCB
-    - io.dbeaver.DBeaverCommunity
     
 - name: Install system utilities
   flatpak:
@@ -34,8 +30,6 @@
     state: present
     method: user
   with_items:
-    - org.gnome.World.PikaBackup
-    - com.usebottles.bottles
     - org.gnome.Connections
     - de.haeckerfelix.Fragments
     - org.gnome.Extensions
@@ -63,7 +57,6 @@
   with_items:
     - de.haeckerfelix.Shortwave
     - sh.cider.Cider
-    - com.bitwarden.desktop
 
 - name: Update flatpaks
   shell:

@@ -1,5 +1,5 @@
 ---
-- name: Install common snap tools
+- name: Install Android tools
   community.general.snap:
     name: "{{ item }}"
     state: present
@@ -7,5 +7,13 @@
   with_items:
     - android-studio
     - flutter
+  become: True
+
+- name: Install common snap tools
+  community.general.snap:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - skype
   become: True
 

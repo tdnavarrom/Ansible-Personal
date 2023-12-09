@@ -17,7 +17,6 @@
   dnf:
     name:
       - timeshift
-      - gnome-tweaks
     state: present
   become: True
 
@@ -93,6 +92,7 @@
   dnf:
     name:
       - obs-studio
+      - celluloid
     state: present
   become: True
 
