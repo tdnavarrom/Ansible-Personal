@@ -1,11 +1,11 @@
 # Ansible-Personal
 
 Basic setup for local pc:
-- Fedora 36
+- Fedora
 - Flatpak support
 - snapd support
 
 
-
-
-ansible-playbook -i inventory/hosts -K
+```bash
+    ansible-playbook -i inventory/hosts -K
+```
