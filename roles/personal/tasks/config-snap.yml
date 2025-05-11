@@ -1,7 +1,0 @@
----
-- name: Creating systemlink for snapd
-  file:
-    src: "/var/lib/snapd/snap"
-    dest: "/snap" 
-    state: link
-  become: True

@@ -8,10 +8,10 @@
     state: present
   become: True
 
-- name: Add winerepo
-  shell:
-    cmd: dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
-  become: True
+# - name: Add winerepo
+#   shell:
+#     cmd: dnf config-manager addrepo --from-repofile=https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
+#   become: True
 
 - name: Install Administrative tools
   dnf:
@@ -20,18 +20,6 @@
     state: present
   become: True
 
-# - name: Install theme tools
-#   dnf:
-#     name:
-#       - gtk-murrine-engine
-#     state: present
-#   become: True
-
-- name: Install 'Development tools' package group
-  dnf:
-    name: "@Development tools"
-    state: present
-  become: True
 
 - name: Install common tools
   dnf:
@@ -43,7 +31,6 @@
       - util-linux-user
       - dkms
       - kernel-devel
-      - snapd
     state: present
   become: True
 
@@ -60,23 +47,9 @@
       - composer
       - Lmod
       - code
-    #  - 'https://dev.mysql.com/get/mysql80-community-release-fc{{ ansible_distribution_major_version  }}-1.noarch.rpm'
+      - codium
     state: present
   become: True
-  
-# - name: Install database tools
-#   dnf:
-#     name:
-#       - mysql-community-server
-#       - mysql-workbench-community
-#     state: present
-#   become: True
-
-# - name: Make sure pymysql is present
-#   become: true # needed if the other tasks are not played as root
-#   pip:
-#     name: pymysql
-#     state: present
 
 
 - name: Install gaming related tools

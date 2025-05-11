@@ -14,7 +14,6 @@
   with_items:
     - org.kde.krita
     - org.kde.kdenlive
-    - org.gnome.Snapshot
 
 - name: Install development tools
   flatpak:
@@ -34,7 +33,6 @@
     - org.gnome.Extensions
     - com.leinardi.gwe
     - com.github.tchx84.Flatseal
-    - org.fedoraproject.MediaWriter
 
 - name: Install communication tools
   flatpak:
@@ -54,8 +52,11 @@
     state: present
     method: user
   with_items:
-    - sh.cider.Cider
-    - org.gnome.Podcasts 
+    - org.gnome.Podcasts
+    - com.spotify.Client
+    - com.vivaldi.Vivaldi
+    - io.missioncenter.MissionCenter
+    - com.google.AndroidStudio
 
 - name: Update flatpaks
   shell:
