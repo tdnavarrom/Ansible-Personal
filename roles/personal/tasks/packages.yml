@@ -8,10 +8,10 @@
     state: present
   become: True
 
-# - name: Add winerepo
-#   shell:
-#     cmd: dnf config-manager addrepo --from-repofile=https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
-#   become: True
+- name: Add winerepo
+  shell:
+    cmd: dnf config-manager addrepo --from-repofile=https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
+  become: True
 
 - name: Install Administrative tools
   dnf:
