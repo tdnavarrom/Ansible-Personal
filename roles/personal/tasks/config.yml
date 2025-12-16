@@ -13,18 +13,3 @@
       mode: "0644"
 
   become: True
-
-- block:
-  - name: import VS Codium key
-    rpm_key:
-      state: present
-      key: "{{ vscodium_key_url }}"
-  - name: copy VSCodium repo config
-    copy:
-      src: etc/yum.repos.d/vscodium.repo
-      dest: /etc/yum.repos.d/vscodium.repo
-      owner: root
-      group: root
-      mode: "0644"
-
-  become: True

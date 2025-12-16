@@ -13,6 +13,22 @@
     cmd: dnf config-manager addrepo --from-repofile=https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version  }}/winehq.repo
   become: True
 
+- name: Add CachyOS Kernel
+  shell:
+    cmd: dnf copr enable bieszczaders/kernel-cachyos
+  become: True
+
+- name: Enable Kernel Modules
+  shell:
+    cmd: setsebool -P domain_kernel_load_modules on
+  become: True
+
+- name: Install Terra
+  shell:
+    cmd: dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+    state: present
+  become: True
+
 - name: Install Administrative tools
   dnf:
     name:
@@ -24,13 +40,12 @@
 - name: Install common tools
   dnf:
     name:
-      - tilix
+      - ghostty
       - htop
       - zsh
       - unrar
-      - util-linux-user
-      - dkms
-      - kernel-devel
+      - kernel-cachyos
+      - kernel-cachyos-devel-matched
     state: present
   become: True
 
@@ -40,14 +55,22 @@
     name:
       - java-latest-openjdk
       - cmake
-      - emacs
-      - vim
+      - neovim
       - nodejs
       - php
       - composer
       - Lmod
       - code
-      - codium
+    state: present
+  become: True
+
+- name: Install Pentesting tools
+  dnf:
+    name:
+      - wireshark
+      - wireshark-gtk
+      - nmap
+      - aircrack-ng
     state: present
   become: True
 
@@ -65,7 +88,6 @@
   dnf:
     name:
       - obs-studio
-      - celluloid
     state: present
   become: True
 

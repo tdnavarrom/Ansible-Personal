@@ -22,6 +22,8 @@
     method: user
   with_items:
     - com.getpostman.Postman
+    - org.ghidra_sre.Ghidra
+    - com.google.AndroidStudio
     
 - name: Install system utilities
   flatpak:
@@ -31,8 +33,12 @@
   with_items:
     - de.haeckerfelix.Fragments
     - org.gnome.Extensions
-    - com.leinardi.gwe
+    - io.missioncenter.MissionCenter
     - com.github.tchx84.Flatseal
+    - com.vysp3r.ProtonPlus
+    - app.devsuite.Ptyxis
+    - org.gnome.Firmware
+    - io.podman_desktop.PodmanDesktop
 
 - name: Install communication tools
   flatpak:
@@ -45,6 +51,8 @@
     - org.telegram.desktop
     - com.slack.Slack
     - us.zoom.Zoom
+    - com.rtosta.zapzap
+    - com.github.IsmaelMartinez.teams_for_linux
 
 - name: Install common tools
   flatpak:
@@ -52,11 +60,9 @@
     state: present
     method: user
   with_items:
-    - org.gnome.Podcasts
-    - com.spotify.Client
     - com.vivaldi.Vivaldi
-    - io.missioncenter.MissionCenter
-    - com.google.AndroidStudio
+    - org.zotero.Zotero
+    - io.github.kolunmi.Bazaar
 
 - name: Update flatpaks
   shell:
