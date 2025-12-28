@@ -1,15 +1,52 @@
 ---
 - block:
-  - name: import VS Code key
-    rpm_key:
+  # --- VS Code ---
+  - name: Import VS Code GPG key
+    ansible.builtin.rpm_key:
       state: present
       key: "{{ microsoft_key_url }}"
-  - name: copy VSCode repo config
-    copy:
+
+  - name: Add VS Code repository
+    ansible.builtin.copy:
       src: etc/yum.repos.d/vscode.repo
       dest: /etc/yum.repos.d/vscode.repo
       owner: root
       group: root
       mode: "0644"
 
-  become: True
+  # --- WineHQ ---
+  - name: Add WineHQ GPG key
+    ansible.builtin.rpm_key:
+      state: present
+      key: https://dl.winehq.org/wine-builds/winehq.key
+
+  - name: Add WineHQ repository
+    ansible.builtin.get_url:
+      url: "https://dl.winehq.org/wine-builds/fedora/{{ ansible_distribution_major_version }}/winehq.repo"
+      dest: /etc/yum.repos.d/winehq.repo
+      owner: root
+      group: root
+      mode: "0644"
+
+  # --- Terra ---
+  # Using shell because the dnf module does not support --repofrompath
+  - name: Install Terra Release (Bootstrap)
+    ansible.builtin.shell:
+      cmd: "dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra{{ ansible_distribution_major_version }}' terra-release"
+    args:
+      creates: /etc/yum.repos.d/terra.repo
+
+  # --- RPM Fusion ---
+  - name: Install RPM Fusion Free
+    ansible.builtin.dnf:
+      name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+      state: present
+      disable_gpg_check: true
+
+  - name: Install RPM Fusion Non-Free
+    ansible.builtin.dnf:
+      name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+      state: present
+      disable_gpg_check: true
+
+  become: true

@@ -1,36 +1,36 @@
 ---
 - name: Add the flathub flatpak repository remote to the user installation
-  flatpak_remote:
+  community.general.flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
     method: user
 
 - name: Install video editing tools
-  flatpak:
+  community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: user
-  with_items:
+  loop:
     - org.kde.krita
     - org.kde.kdenlive
 
 - name: Install development tools
-  flatpak:
+  community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: user
-  with_items:
+  loop:
     - com.getpostman.Postman
     - org.ghidra_sre.Ghidra
     - com.google.AndroidStudio
-    
+
 - name: Install system utilities
-  flatpak:
+  community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: user
-  with_items:
+  loop:
     - de.haeckerfelix.Fragments
     - org.gnome.Extensions
     - io.missioncenter.MissionCenter
@@ -41,11 +41,11 @@
     - io.podman_desktop.PodmanDesktop
 
 - name: Install communication tools
-  flatpak:
+  community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: user
-  with_items:
+  loop:
     - com.discordapp.Discord
     - org.signal.Signal
     - org.telegram.desktop
@@ -55,15 +55,16 @@
     - com.github.IsmaelMartinez.teams_for_linux
 
 - name: Install common tools
-  flatpak:
+  community.general.flatpak:
     name: "{{ item }}"
     state: present
     method: user
-  with_items:
+  loop:
     - com.vivaldi.Vivaldi
     - org.zotero.Zotero
     - io.github.kolunmi.Bazaar
 
+# Usually flatpak modules handle updates via state: latest, but this shell command is fine for a blanket update.
 - name: Update flatpaks
-  shell:
+  ansible.builtin.shell:
     cmd: flatpak update -y
